@@ -256,7 +256,7 @@ fun HomeScreen(deps: HomeDeps, settings: LauncherSettings, appWidgets: AppWidget
         }
     }
 
-    LaunchedEffect(deps) {
+    LaunchedEffect(deps, settings.gestures.homePress, settings.defaultPage, homePages) {
         deps.homePresses.collect {
             if (!closeAll()) perform(settings.gestures.homePress)
         }

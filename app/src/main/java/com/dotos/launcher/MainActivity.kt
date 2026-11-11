@@ -135,7 +135,9 @@ class MainActivity : ComponentActivity() {
         super.onNewIntent(intent)
         // HOME pressed while we are already the front activity.
         // (When returning from another app, onNewIntent runs before onResume, so we are not RESUMED yet.)
-        val alreadyInFront = lifecycle.currentState.isAtLeast(androidx.lifecycle.Lifecycle.State.RESUMED)
+        // Same signal as AOSP Launcher3: we had focus and the task was not just brought to front.
+        val alreadyInFront = hasWindowFocus() &&
+            (intent.flags and Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT) != Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT
         if (alreadyInFront && Intent.ACTION_MAIN == intent.action && intent.hasCategory(Intent.CATEGORY_HOME)) {
             graph.homePresses.tryEmit(Unit)
         }

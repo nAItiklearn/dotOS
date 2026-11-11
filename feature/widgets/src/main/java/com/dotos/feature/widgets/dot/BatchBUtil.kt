@@ -291,12 +291,12 @@ internal fun FitText(
     letterSpacing: TextUnit = TextUnit.Unspecified,
 ) {
     FitText(
-        text = AnnotatedString(text),
+        text = if (role == TextRole.DISPLAY) colonSafe(text) else AnnotatedString(text),
         color = color,
         modifier = modifier,
         role = role,
         maxSize = maxSize,
-        sizeTemplate = AnnotatedString(sizeTemplate),
+        sizeTemplate = if (role == TextRole.DISPLAY) colonSafe(sizeTemplate) else AnnotatedString(sizeTemplate),
         alignment = alignment,
         letterSpacing = letterSpacing,
     )
@@ -491,5 +491,29 @@ internal fun DotGlyph(
         val left = (size.width - pitch * cols) / 2f
         val top = (size.height - pitch * rows.size) / 2f
         drawDotMatrix(rows, color, offColor, Offset(left, top), pitch, 0.42f)
+    }
+}
+
+/**
+ * Doto's colon renders as two stacked glyph fragments at large sizes. Draw ':' with the bold mono
+ * face instead, which sits on the digit centre line and keeps the dot-matrix look.
+ */
+private fun colonSafe(text: String): AnnotatedString {
+    if (':' !in text) return AnnotatedString(text)
+    return androidx.compose.ui.text.buildAnnotatedString {
+        for (c in text) {
+            if (c == ':') {
+                pushStyle(
+                    androidx.compose.ui.text.SpanStyle(
+                        fontFamily = com.dotos.core.designsystem.DotFonts.Mono,
+                        fontWeight = androidx.compose.ui.text.font.FontWeight.Bold,
+                    ),
+                )
+                append(c)
+                pop()
+            } else {
+                append(c)
+            }
+        }
     }
 }
