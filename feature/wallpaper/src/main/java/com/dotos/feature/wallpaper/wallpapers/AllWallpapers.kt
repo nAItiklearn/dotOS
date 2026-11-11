@@ -15,5 +15,5 @@ object AllWallpapers {
         ContourMap,
         Pulse,
         GlyphBurst,
-    )
+    ) + ReferenceWallpapers.list
 }

@@ -190,7 +190,7 @@ internal fun WallpaperOnlyPreview(
         BoxWithConstraints(Modifier.fillMaxSize()) {
             val fontSp = with(LocalDensity.current) { (maxWidth * 0.2f).toSp() }
             Text(
-                "09:41",
+                com.dotos.core.designsystem.dotTime("09:41"),
                 style = DotTheme.type.display.copy(fontSize = fontSp, lineHeight = fontSp * 1.1f),
                 color = ink,
                 modifier = Modifier

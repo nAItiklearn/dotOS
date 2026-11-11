@@ -1,0 +1,8 @@
+DotOS Launcher 1.0.0 - first release.
+- Nothing-style home: dark dot plates, large 2x2 icons, dock, search pill, page dots, folders, drag and drop
+- App Library page with automatic categories, and an app drawer with fuzzy search, calculator, A-Z scroller, work tab and Private Space
+- Original dot icon pack (90 glyphs, ~1000 apps) plus automatic dot-ify for every other app, and icon pack support
+- 19 built-in widgets: clock faces, date, battery, compass, life in dots, quick settings, photo, recorder, pedometer, away time, breathing, timer, sticky note, LED sign, snake, music, counter, quick capture, search
+- 13 procedural wallpapers including animated Atmosphere, fluted Glass, grain and x-ray looks, plus a live wallpaper
+- Full settings with live previews, backup and restore
+- No internet permission. Collects nothing, sends nothing.
