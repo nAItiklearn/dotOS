@@ -80,8 +80,10 @@ class MainActivity : ComponentActivity() {
         setContent {
             val settings by g.settings.settingsOrNull.collectAsStateWithLifecycle()
             val s = settings
+            val systemDark = androidx.compose.foundation.isSystemInDarkTheme()
             val dark = when (s?.themeMode) {
                 ThemeMode.LIGHT -> false
+                ThemeMode.AUTO -> systemDark
                 else -> true
             }
             DotTheme(

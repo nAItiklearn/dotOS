@@ -1,0 +1,17 @@
+# Startup / hot-path rules for ART ahead-of-time compilation (installed via ProfileInstaller).
+# Compose, Room and coroutines ship their own profiles; these cover DotOS code on the first frame,
+# page swipes, drawer open and icon rendering.
+HSPLcom/dotos/launcher/**->**(**)**
+HSPLcom/dotos/core/**->**(**)**
+HSPLcom/dotos/feature/home/**->**(**)**
+HSPLcom/dotos/feature/drawer/**->**(**)**
+HSPLcom/dotos/feature/icons/**->**(**)**
+HSPLcom/dotos/feature/wallpaper/**->**(**)**
+HSPLcom/dotos/feature/widgets/**->**(**)**
+Lcom/dotos/launcher/**;
+Lcom/dotos/core/**;
+Lcom/dotos/feature/home/**;
+Lcom/dotos/feature/drawer/**;
+Lcom/dotos/feature/icons/**;
+Lcom/dotos/feature/wallpaper/**;
+Lcom/dotos/feature/widgets/**;

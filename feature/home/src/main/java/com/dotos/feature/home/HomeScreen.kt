@@ -63,6 +63,8 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Rect as ComposeRect
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.StrokeCap
+import androidx.compose.ui.graphics.lerp
+import androidx.compose.ui.graphics.luminance
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.input.pointer.pointerInput
@@ -570,7 +572,7 @@ fun HomeScreen(deps: HomeDeps, settings: LauncherSettings, appWidgets: AppWidget
     }
 
     // ------------------------------------------------------------------ UI
-    val iconSpec = remember(settings) { settings.toIconSpec() }
+    val iconSpec = remember(settings) { settings.homeIconSpec() }
     val drawerApps = remember(visibleApps, labelOverrides) { visibleApps }
     val privateUser = remember(apps, quiet) { deps.apps.privateProfile() }
     val privateLocked: Boolean? = privateUser?.let { deps.apps.serialOf(it) in quiet }
@@ -867,6 +869,15 @@ fun HomeScreen(deps: HomeDeps, settings: LauncherSettings, appWidgets: AppWidget
             )
         }
     }
+}
+
+/** Same derivation as the settings previews, so the Themed style matches everywhere. */
+private fun LauncherSettings.homeIconSpec(): com.dotos.feature.icons.engine.IconSpec {
+    val resolved = wallpaper.resolve()
+    val palette = resolved.wallpaper.colorSlots.mapNotNull { resolved.colors[it.id] }.map { it.copy(alpha = 1f) }
+        .distinct().sortedBy { it.luminance() }
+    val base = wallpaper.colors["tone"]?.let { Color(it.toInt()) } ?: palette.getOrNull(palette.size / 2) ?: Color(0xFF8A8A8A)
+    return toIconSpec(lerp(base, Color.Black, 0.62f), lerp(base, Color.White, 0.82f))
 }
 
 private fun Rect.toComposeRect() = ComposeRect(left.toFloat(), top.toFloat(), right.toFloat(), bottom.toFloat())
