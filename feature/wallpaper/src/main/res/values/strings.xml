@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="dot_wallpaper_label">DotOS wallpaper</string>
+    <string name="dot_wallpaper_description">The wallpaper you chose in DotOS, live on every screen. Rendered on your phone; nothing is downloaded.</string>
+</resources>

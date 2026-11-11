@@ -32,6 +32,7 @@ import com.dotos.feature.icons.engine.IconEngine
 import com.dotos.feature.icons.engine.color
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.launch
 
 class MainActivity : ComponentActivity() {
     private lateinit var appWidgets: AppWidgetController
@@ -41,6 +42,10 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         val g = graph
         appWidgets = AppWidgetController(applicationContext)
+        // Automated screenshot runs skip the first-run flow.
+        if (intent?.getBooleanExtra("dotos.demo", false) == true) {
+            g.scope.launch { g.settings.update { it.copy(firstRunDone = true) } }
+        }
         val deps = object : HomeDeps {
             override val settings: SettingsRepository = g.settings
             override val apps: AppsRepository = g.apps

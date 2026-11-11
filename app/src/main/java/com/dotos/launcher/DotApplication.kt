@@ -3,8 +3,17 @@ package com.dotos.launcher
 import android.app.Application
 import android.os.Handler
 import android.os.Looper
+import com.dotos.core.data.settings.WallpaperConfig
+import com.dotos.feature.wallpaper.service.WallpaperConfigSource
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.filterNotNull
+import kotlinx.coroutines.flow.map
 
-class DotApplication : Application() {
+class DotApplication : Application(), WallpaperConfigSource {
+    override val wallpaperConfig: Flow<WallpaperConfig>
+        get() = graph.settings.settingsOrNull.filterNotNull().map { it.wallpaper }.distinctUntilChanged()
+
     lateinit var graph: AppGraph
         private set
 

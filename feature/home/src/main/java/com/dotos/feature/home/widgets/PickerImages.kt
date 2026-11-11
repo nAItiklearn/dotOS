@@ -31,7 +31,7 @@ internal fun loadWidgetPreview(context: Context, info: AppWidgetProviderInfo, de
  */
 internal fun loadAppIcon(context: Context, info: AppWidgetProviderInfo, sizePx: Int): ImageBitmap? {
     val pm = context.packageManager
-    val raw = runCatching { info.providerInfo.applicationInfo.loadIcon(pm) }.getOrNull() ?: return null
+    val raw = runCatching { pm.getApplicationInfo(info.provider.packageName, 0).loadIcon(pm) }.getOrNull() ?: return null
     val badged = runCatching { pm.getUserBadgedIcon(raw, info.profile) }.getOrNull() ?: raw
     return runCatching { badged.toImageBitmap(sizePx) }.getOrNull()
 }

@@ -81,7 +81,7 @@ class AppWidgetController(context: Context) {
         val pkg = info.provider.packageName
         val cached = appLabels[pkg]
         if (cached != null) return cached
-        val loaded = runCatching { info.providerInfo.applicationInfo.loadLabel(appContext.packageManager).toString() }
+        val loaded = runCatching { appContext.packageManager.getApplicationInfo(pkg, 0).loadLabel(appContext.packageManager).toString() }
             .getOrNull()
             ?.trim()
             ?.takeIf { it.isNotEmpty() }

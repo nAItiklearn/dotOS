@@ -299,3 +299,7 @@ fun rememberBattery(): Pair<Float, Boolean> {
     }
     return state
 }
+
+/** Same per-frame update for the live wallpaper service (no Compose state involved). */
+fun WallpaperFrame.updateForService(scope: DrawScope, resolved: ResolvedWallpaper, t: Float, scroll: Float, density: Float) =
+    update(scope, resolved, t, scroll, density, 1f to false)
