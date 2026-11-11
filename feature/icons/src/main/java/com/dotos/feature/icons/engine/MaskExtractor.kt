@@ -99,6 +99,14 @@ internal object MaskExtractor {
     fun normalize(src: Bitmap): Bitmap? {
         val px = IntArray(SIZE * SIZE)
         src.getPixels(px, 0, SIZE, 0, 0, SIZE, SIZE)
+        // Alpha contrast curve: drops drop-shadows and faint backplates, keeps crisp anti-aliased edges.
+        for (i in px.indices) {
+            val a = (px[i] ushr 24) / 255f
+            val t = ((a - 0.38f) / 0.30f).coerceIn(0f, 1f)
+            val alpha = (t * t * (3 - 2 * t) * 255f).roundToInt()
+            px[i] = (alpha shl 24) or 0x00FFFFFF
+        }
+        val src2 = Bitmap.createBitmap(px, SIZE, SIZE, Bitmap.Config.ARGB_8888)
         var minX = SIZE
         var minY = SIZE
         var maxX = -1
@@ -121,7 +129,7 @@ internal object MaskExtractor {
         c.translate(SIZE / 2f, SIZE / 2f)
         c.scale(scale, scale)
         c.translate(-(minX + w / 2f), -(minY + h / 2f))
-        c.drawBitmap(src, 0f, 0f, paint)
+        c.drawBitmap(src2, 0f, 0f, paint)
         return out
     }
 

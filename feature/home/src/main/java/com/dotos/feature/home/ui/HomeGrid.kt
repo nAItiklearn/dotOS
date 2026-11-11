@@ -186,9 +186,13 @@ internal fun DockRow(
     modifier: Modifier = Modifier,
 ) {
     val density = LocalDensity.current
-    val plateDp: Dp = plate?.let { with(density) { it.toDp() } }?.coerceAtMost(64.dp) ?: 58.dp
+    androidx.compose.foundation.layout.BoxWithConstraints(modifier.fillMaxWidth()) {
+    // Same plate as the grid, unless 5-6 slots need it smaller to keep breathing room.
+    val slotW = maxWidth / slots
+    val gridPlate: Dp = plate?.let { with(density) { it.toDp() } } ?: 64.dp
+    val plateDp: Dp = minOf(gridPlate, slotW * 0.84f)
     Row(
-        modifier.fillMaxWidth().height(plateDp + 16.dp),
+        Modifier.fillMaxWidth().height(plateDp + 16.dp),
         horizontalArrangement = Arrangement.SpaceEvenly,
         verticalAlignment = Alignment.CenterVertically,
     ) {
@@ -208,4 +212,5 @@ internal fun DockRow(
             }
         }
     }
+}
 }

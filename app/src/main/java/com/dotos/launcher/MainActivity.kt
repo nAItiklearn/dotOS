@@ -46,6 +46,10 @@ class MainActivity : ComponentActivity() {
         if (intent?.getBooleanExtra("dotos.demo", false) == true) {
             g.scope.launch { g.settings.update { it.copy(firstRunDone = true) } }
         }
+        // Screenshot runs: lay out every built-in widget on extra pages for visual review.
+        if (intent?.getBooleanExtra("dotos.demoWidgets", false) == true) {
+            g.scope.launch { DemoLayout.placeAllWidgets(g) }
+        }
         val deps = object : HomeDeps {
             override val settings: SettingsRepository = g.settings
             override val apps: AppsRepository = g.apps

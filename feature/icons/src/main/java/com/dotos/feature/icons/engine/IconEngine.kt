@@ -123,7 +123,7 @@ class IconEngine(private val context: Context, private val scope: CoroutineScope
     }
 
     private fun loadOrExtract(app: AppInfo): Bitmap? {
-        val file = File(diskDir, hash("${app.key}|${app.versionCode}|v2") + ".png")
+        val file = File(diskDir, hash("${app.key}|${app.versionCode}|v3") + ".png")
         if (file.exists()) {
             android.graphics.BitmapFactory.decodeFile(file.path)?.let { return it }
         }
