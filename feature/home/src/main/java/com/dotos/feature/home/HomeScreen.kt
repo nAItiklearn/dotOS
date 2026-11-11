@@ -826,7 +826,23 @@ fun HomeScreen(deps: HomeDeps, settings: LauncherSettings, appWidgets: AppWidget
                     }
                 },
                 onCustomize = { deps.openSettings("icons") },
-                onResize = { item, sx, sy -> scope.launch { deps.layout.resize(item.id, sx, sy) } },
+                onResize = { item, sx, sy ->
+                    val m = metrics
+                    if (m != null) {
+                        val e = item.entity
+                        val grid = deps.layout.occupancy(rawItems.orEmpty(), e.screen, m.cols, m.rows, excludeId = item.id)
+                        val pos = if (deps.layout.fits(grid, e.cellX, e.cellY, sx, sy)) e.cellX to e.cellY else deps.layout.nearestFree(grid, sx, sy, e.cellX, e.cellY)
+                        if (pos == null) {
+                            haptics.reject()
+                            Toast.makeText(context, "Not enough room on this page", Toast.LENGTH_SHORT).show()
+                        } else {
+                            scope.launch {
+                                deps.layout.resize(item.id, sx, sy)
+                                if (pos.first != e.cellX || pos.second != e.cellY) deps.layout.moveOnHome(item.id, e.screen, pos.first, pos.second)
+                            }
+                        }
+                    }
+                },
                 onLaunch = { app, rect -> launch(app, rect) },
             )
             EditSheet(

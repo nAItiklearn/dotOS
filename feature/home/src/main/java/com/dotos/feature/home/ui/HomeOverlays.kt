@@ -226,6 +226,13 @@ internal fun ItemMenu(
                         }
                     }
                 }
+                if (item != null && target.source == DragSource.HOME && (item.isApp || item.isFolder)) {
+                    val large = item.entity.spanX >= 2
+                    MenuRow(if (large) "Small icon" else "Large icon") {
+                        if (large) onResize(item, 1, 1) else onResize(item, 2, 2)
+                        drag.menu = null
+                    }
+                }
                 if (app != null && fromDrawer) MenuRow("Add to home") { onAddToHome(app); drag.menu = null }
                 if (app != null) {
                     MenuRow("App info") { apps.openAppInfo(app); drag.menu = null }

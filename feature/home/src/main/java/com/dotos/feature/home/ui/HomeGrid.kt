@@ -72,8 +72,8 @@ internal fun HomeGridPage(
                 val e = item.entity
                 val r = metrics.itemRect(e.cellX, e.cellY, e.spanX, e.spanY)
                 val hidden = drag.session?.item?.id == item.id
-                val isSingle = e.spanX == 1 && e.spanY == 1 &&
-                    (e.type == ItemType.APP || e.type == ItemType.FOLDER || e.type == ItemType.SHORTCUT)
+                // Apps and folders can be 1x1 or "large" 2x2 circles (Nothing-style big icons).
+                val isSingle = e.type == ItemType.APP || e.type == ItemType.FOLDER || e.type == ItemType.SHORTCUT
                 val w = with(density) { r.width.toDp() }
                 val h = with(density) { r.height.toDp() }
                 Box(
@@ -84,7 +84,8 @@ internal fun HomeGridPage(
                     contentAlignment = Alignment.Center,
                 ) {
                     if (isSingle) {
-                        val plate = if (settings.showLabels) w * 0.84f else w
+                        val side = if (w < h) w else h
+                        val plate = if (settings.showLabels && e.spanX == 1) side * 0.84f else side
                         ItemCell(item, DragSource.HOME, plate, settings, labelColor, badges, drag, callbacks)
                     } else {
                         WidgetCell(item, metrics, safeMode, appWidgets, callbacks)

@@ -21,7 +21,7 @@ Status: early development (version 0.1.0). Things marked *planned* below are not
 - Drawer: swipe up from home. A-Z grid, edge fast-scroller, notification badges (dot or count), blurred and dimmed wallpaper behind it.
 - Local search: ranks exact, prefix, word prefix, initials, substring, then subsequence matches, with accent folding. Typing an arithmetic expression (`+ - * / % ^`, parentheses) shows the result inline.
 - Work-profile tab when work apps exist. Private Space row on Android 15 and later (lock and unlock from the drawer; the launcher must be the default home app).
-- Hidden apps: removed from the home screen, drawer and App Library. The list is managed behind the device fingerprint or screen lock. This is a convenience, not security: other launchers and system Settings still show the app.
+- Hidden apps: removed from the drawer and App Library (icons you already placed on a home page stay there). The list is managed behind the device fingerprint or screen lock. This is a convenience, not security: other launchers and system Settings still show the app.
 
 **Icons**
 - Resolution order: per-app override, bundled DotOS glyph, the app's own Android 13 monochrome layer, then an automatic single-colour mask extracted from the app's icon. Details in [docs/icon-pipeline.md](docs/icon-pipeline.md).
