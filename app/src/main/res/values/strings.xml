@@ -3,4 +3,5 @@
     <!-- Rename the whole app here. -->
     <string name="app_name">DotOS Launcher</string>
     <string name="settings_title">DotOS settings</string>
+    <string name="accessibility_description">Lets DotOS lock the screen when you double-tap the home screen. DotOS does not read or collect anything on your screen.</string>
 </resources>

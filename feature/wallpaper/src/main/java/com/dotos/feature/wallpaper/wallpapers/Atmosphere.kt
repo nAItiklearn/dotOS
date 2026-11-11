@@ -37,8 +37,8 @@ object Atmosphere : DotWallpaper {
     )
 
     override val params = listOf(
-        WallpaperParam("glow", "Glow", 0f, 1.5f, 1f),
-        WallpaperParam("softness", "Softness", 0.15f, 0.9f, 0.42f),
+        WallpaperParam("glow", "Glow", 0f, 2f, 1.35f),
+        WallpaperParam("softness", "Softness", 0.15f, 0.9f, 0.34f),
         WallpaperParam("grain", "Grain", 0f, 1f, 0.45f),
         WallpaperParam("vignette", "Vignette", 0f, 1f, 0.35f),
         WallpaperParam("drift", "Drift", 0f, 2f, 1f),
@@ -114,7 +114,7 @@ object Atmosphere : DotWallpaper {
             float aspect = iResolution.x / iResolution.y;
             float2 uv = frag / iResolution.y;
             uv.x += iScroll * 0.06 * aspect;
-            float t = iTime * 0.045 * pDrift;
+            float t = iTime * 0.07 * pDrift;
 
             // Gentle domain warp so blobs breathe organically instead of sliding.
             uv += 0.035 * float2(sin(uv.y * 3.1 + t * 1.7), cos(uv.x * 2.7 - t * 1.3));
@@ -129,7 +129,7 @@ object Atmosphere : DotWallpaper {
             float w2 = blob(uv, p2, s * 0.95) * pGlow;
             float w3 = blob(uv, p3, s * 1.25) * pGlow;
             float w4 = blob(uv, p4, s * 0.85) * pGlow * 0.9;
-            float wb = 0.55;
+            float wb = 0.16;
 
             half3 col = (cBg.rgb * wb + c1.rgb * w1 + c2.rgb * w2 + c3.rgb * w3 + c4.rgb * w4) / (wb + w1 + w2 + w3 + w4);
 
@@ -172,9 +172,9 @@ object Atmosphere : DotWallpaper {
         val w = size.width
         val h = size.height
         val aspect = w / h
-        val t = frame.time * 0.045f * frame.param("drift")
+        val t = frame.time * 0.07f * frame.param("drift")
         val soft = frame.param("softness")
-        val glow = frame.param("glow").coerceIn(0f, 1.5f)
+        val glow = frame.param("glow").coerceIn(0f, 2f)
         drawRect(frame.color("bg"))
         val sx = -frame.scroll * 0.06f * aspect * h
         fun blob(color: Color, ux: Float, uy: Float, s: Float, strength: Float) {

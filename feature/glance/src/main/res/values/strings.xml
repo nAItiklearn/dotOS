@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="dotg_clock_label">Dot Clock</string>
+    <string name="dotg_clock_description">Time and date in a dot-matrix face.</string>
+    <string name="dotg_battery_label">Dot Battery</string>
+    <string name="dotg_battery_description">Battery level as a row of dots.</string>
+    <string name="dotg_life_label">Life in Dots</string>
+    <string name="dotg_life_description">How much of the year has passed, one dot per day.</string>
+
+    <string name="dotg_battery_cd">Battery %1$d percent</string>
+    <string name="dotg_battery_charging_cd">Battery %1$d percent, charging</string>
+    <string name="dotg_life_cd">%1$d percent of %2$d has passed</string>
+
+    <!-- Drawn with the built-in 5x7 dot font (Latin capitals and digits only), so they are not translated. -->
+    <string name="dotg_caption_battery" translatable="false">BATTERY</string>
+    <string name="dotg_caption_charging" translatable="false">CHARGING</string>
+    <string name="dotg_life_of" translatable="false">OF</string>
+</resources>

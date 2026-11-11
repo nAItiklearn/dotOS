@@ -185,6 +185,19 @@ private fun combinedEffect(blur: Float, glass: RenderEffect?): androidx.compose.
     return effect?.asComposeRenderEffect()
 }
 
+/** Home reports touches here so interactive wallpapers (Pulse) can react. Lock-free, main thread. */
+object WallpaperTouch {
+    @Volatile internal var x = -1f
+    @Volatile internal var y = -1f
+    @Volatile internal var at = 0L
+
+    fun report(px: Float, py: Float) {
+        x = px
+        y = py
+        at = System.nanoTime()
+    }
+}
+
 private fun WallpaperFrame.update(
     scope: DrawScope,
     resolved: ResolvedWallpaper,
@@ -200,6 +213,9 @@ private fun WallpaperFrame.update(
     this.density = density
     this.battery = battery.first
     this.charging = battery.second
+    touchX = WallpaperTouch.x
+    touchY = WallpaperTouch.y
+    touchAge = if (WallpaperTouch.at == 0L) 1000f else ((System.nanoTime() - WallpaperTouch.at) / 1_000_000_000f)
     colorMap = resolved.colors
     paramMap = resolved.params
     val now = System.currentTimeMillis()

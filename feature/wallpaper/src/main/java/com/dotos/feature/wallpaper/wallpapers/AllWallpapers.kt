@@ -6,5 +6,14 @@ import com.dotos.feature.wallpaper.engine.DotWallpaper
 object AllWallpapers {
     val list: List<DotWallpaper> = listOf(
         Atmosphere,
+        DotField,
+        HalftoneOrb,
+        DotWave,
+        Orbit,
+        GradientDither,
+        MatrixRain,
+        ContourMap,
+        Pulse,
+        GlyphBurst,
     )
 }

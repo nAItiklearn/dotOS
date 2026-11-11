@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Widget surfaces are always dark plates, like the in-launcher DotCard (DotColors.plate / hairline). -->
+    <color name="dotg_plate">#F21B1B1B</color>
+    <color name="dotg_hairline">#1FFFFFFF</color>
+    <color name="dotg_on">#FFFFFFFF</color>
+    <color name="dotg_muted">#FF8A8A8A</color>
+    <color name="dotg_off">#2EFFFFFF</color>
+    <color name="dotg_accent">#FFD71921</color>
+</resources>

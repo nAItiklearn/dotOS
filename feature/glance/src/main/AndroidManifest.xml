@@ -1,2 +1,77 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest />
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- Package visibility for the tap targets the widgets resolve before wiring a click. -->
+    <queries>
+        <intent>
+            <action android:name="android.intent.action.SHOW_ALARMS" />
+        </intent>
+        <intent>
+            <action android:name="android.intent.action.POWER_USAGE_SUMMARY" />
+        </intent>
+    </queries>
+
+    <application>
+
+        <!-- Dot Clock: TextClock based (ticks by itself, no updates needed). -->
+        <receiver
+            android:name=".DotClockReceiver"
+            android:exported="true"
+            android:label="@string/dotg_clock_label">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/dotg_clock_info" />
+        </receiver>
+
+        <!-- Dot Battery: refreshed every 30 min by the system and on plug / unplug by the refresh receiver. -->
+        <receiver
+            android:name=".DotBatteryReceiver"
+            android:exported="true"
+            android:label="@string/dotg_battery_label">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/dotg_battery_info" />
+        </receiver>
+        <!--
+            System broadcasts are sent by the system uid, which passes the export check, so this
+            receiver does not need to be exported (and cannot be poked by other apps).
+        -->
+        <receiver
+            android:name=".BatteryRefreshReceiver"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="android.intent.action.ACTION_POWER_CONNECTED" />
+                <action android:name="android.intent.action.ACTION_POWER_DISCONNECTED" />
+            </intent-filter>
+        </receiver>
+
+        <!-- Life in Dots: daily periodic update plus date / clock / time zone changes. -->
+        <receiver
+            android:name=".LifeInDotsReceiver"
+            android:exported="true"
+            android:label="@string/dotg_life_label">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/dotg_life_info" />
+        </receiver>
+        <receiver
+            android:name=".LifeInDotsRefreshReceiver"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="android.intent.action.DATE_CHANGED" />
+                <action android:name="android.intent.action.TIME_SET" />
+                <action android:name="android.intent.action.TIMEZONE_CHANGED" />
+            </intent-filter>
+        </receiver>
+
+    </application>
+</manifest>
