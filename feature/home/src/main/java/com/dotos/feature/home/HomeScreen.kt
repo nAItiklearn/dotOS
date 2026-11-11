@@ -160,8 +160,10 @@ fun HomeScreen(deps: HomeDeps, settings: LauncherSettings, appWidgets: AppWidget
     }
     val appsByKey = remember(apps) { apps.associateBy { it.key } }
     val visibleApps = remember(apps, hiddenKeys) { apps.filter { it.key !in hiddenKeys } }
-    val layout: HomeLayout = remember(rawItems, appsByKey, settings.pageCount) {
-        rawItems?.let { buildLayout(it, appsByKey, settings.pageCount) } ?: HomeLayout.Empty
+    // Hidden apps disappear from home too (spec 3.3); unhiding brings them back in place.
+    val homeAppsByKey = remember(appsByKey, hiddenKeys) { if (hiddenKeys.isEmpty()) appsByKey else appsByKey - hiddenKeys }
+    val layout: HomeLayout = remember(rawItems, homeAppsByKey, settings.pageCount) {
+        rawItems?.let { buildLayout(it, homeAppsByKey, settings.pageCount) } ?: HomeLayout.Empty
     }
     val recent = remember(usage, appsByKey) {
         usage.sortedByDescending { it.lastLaunched }.take(8).mapNotNull { appsByKey[it.componentKey] }
@@ -573,7 +575,16 @@ fun HomeScreen(deps: HomeDeps, settings: LauncherSettings, appWidgets: AppWidget
 
     // ------------------------------------------------------------------ UI
     val iconSpec = remember(settings) { settings.homeIconSpec() }
-    val drawerApps = remember(visibleApps, labelOverrides) { visibleApps }
+    val drawerApps = remember(visibleApps, usage, settings.drawerSort) {
+        when (settings.drawerSort) {
+            com.dotos.core.data.settings.DrawerSort.ALPHABETICAL -> visibleApps
+            com.dotos.core.data.settings.DrawerSort.MOST_USED -> {
+                val counts = usage.associate { it.componentKey to it.launchCount }
+                visibleApps.sortedByDescending { counts[it.key] ?: 0 }
+            }
+            com.dotos.core.data.settings.DrawerSort.RECENT -> visibleApps.sortedByDescending { it.installTime }
+        }
+    }
     val privateUser = remember(apps, quiet) { deps.apps.privateProfile() }
     val privateLocked: Boolean? = privateUser?.let { deps.apps.serialOf(it) in quiet }
     val screenHeight = LocalConfiguration.current.screenHeightDp
@@ -783,7 +794,8 @@ fun HomeScreen(deps: HomeDeps, settings: LauncherSettings, appWidgets: AppWidget
                         columns = settings.drawerColumns,
                         labels = settings.drawerLabels,
                         autoKeyboard = settings.autoKeyboard,
-                        fastScroller = settings.fastScroller,
+                        fastScroller = settings.fastScroller && settings.drawerSort == com.dotos.core.data.settings.DrawerSort.ALPHABETICAL,
+                        list = settings.drawerLayout == com.dotos.core.data.settings.DrawerLayout.LIST,
                         iconSize = 56.dp,
                         badges = badges,
                         showBadges = settings.badgeStyle != com.dotos.core.data.settings.BadgeStyle.OFF,

@@ -17,8 +17,9 @@ android {
         applicationId = "com.dotos.launcher"
         minSdk = 29
         targetSdk = 36
-        versionCode = 1
-        versionName = "0.1.0"
+        // Release workflow passes -PversionCode / -PversionName from the git tag.
+        versionCode = (project.findProperty("versionCode") as String?)?.toIntOrNull() ?: 1
+        versionName = (project.findProperty("versionName") as String?) ?: "0.1.0"
         vectorDrawables.useSupportLibrary = true
     }
 

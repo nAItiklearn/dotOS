@@ -107,6 +107,8 @@ data class DrawerConfig(
     val iconSize: Dp = 56.dp,
     val badges: Map<String, Int> = emptyMap(),
     val showBadges: Boolean = true,
+    /** Single-column list instead of a grid. */
+    val list: Boolean = false,
 )
 
 /**
@@ -267,7 +269,7 @@ fun AppDrawer(
             }
             Box(Modifier.weight(1f).fillMaxWidth()) {
                 LazyVerticalGrid(
-                    columns = GridCells.Fixed(config.columns),
+                    columns = GridCells.Fixed(if (config.list) 1 else config.columns),
                     state = gridState,
                     contentPadding = PaddingValues(start = 12.dp, end = if (config.fastScroller) 28.dp else 12.dp, top = 8.dp, bottom = 32.dp),
                     modifier = Modifier.fillMaxSize().nestedScroll(nested),
@@ -325,6 +327,40 @@ private fun DrawerCell(app: AppInfo, config: DrawerConfig, actions: DrawerAction
     val scale by androidx.compose.animation.core.animateFloatAsState(if (pressed) 0.94f else 1f, label = "press")
     fun bounds(): Rect? = coords?.takeIf { it.isAttached }?.boundsInRoot()?.let {
         Rect(it.left.roundToInt(), it.top.roundToInt(), it.right.roundToInt(), it.bottom.roundToInt())
+    }
+    val gestures = Modifier
+        .onGloballyPositioned { coords = it }
+        .semantics { contentDescription = app.label }
+        .launcherGestures(
+            key = app.key,
+            onPress = { pressed = it },
+            onTap = { actions.launch(app, bounds()) },
+            onLongPress = { local ->
+                haptics.pick()
+                val c = coords
+                val b = bounds()
+                if (c != null && b != null) actions.longPress(app, b, c.localToRoot(local))
+            },
+            onDrag = actions::drag,
+            onDragEnd = actions::dragEnd,
+            onDragCancel = actions::dragCancel,
+        )
+    if (config.list) {
+        Row(
+            Modifier.fillMaxWidth().padding(horizontal = 8.dp, vertical = 6.dp).then(gestures),
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            Box(Modifier.graphicsLayer { scaleX = scale; scaleY = scale }) { AppIcon(app, size = 44.dp) }
+            Text(
+                app.label,
+                style = DotTheme.type.body,
+                color = colors.onSurface,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis,
+                modifier = Modifier.padding(start = 16.dp).weight(1f),
+            )
+        }
+        return
     }
     Column(
         Modifier
