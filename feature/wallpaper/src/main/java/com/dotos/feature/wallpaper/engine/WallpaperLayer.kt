@@ -87,7 +87,7 @@ fun WallpaperLayer(
             null
         }
     }
-    val brush = remember(shader) { shader?.let { ShaderBrush(it) } }
+    val brush = remember(shader) { if (Build.VERSION.SDK_INT >= 33 && shader != null) shaderBrush(shader) else null }
 
     val speed = config.animation.multiplier
     val powerSave = rememberPowerSaveMode()
@@ -168,6 +168,9 @@ fun WallpaperLayer(
         }
     }
 }
+
+@RequiresApi(33)
+private fun shaderBrush(shader: RuntimeShader): ShaderBrush = ShaderBrush(shader)
 
 @RequiresApi(31)
 private fun combinedEffect(blur: Float, glass: RenderEffect?): androidx.compose.ui.graphics.RenderEffect? {
