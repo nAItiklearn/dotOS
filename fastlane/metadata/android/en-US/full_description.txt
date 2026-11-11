@@ -1,0 +1,45 @@
+DotOS Launcher is an open-source Android home screen with a dot-matrix look: black plates, monochrome dot icons, procedural wallpapers and dot-matrix widgets. Everything ships inside the APK. It has no internet permission, no account, no ads and no tracking.
+
+Unofficial, fan-made project. Not affiliated with, endorsed by, or connected to Nothing Technology Limited. All artwork, icons, wallpapers and fonts in this project are original or open-source (SIL OFL).
+
+HOME SCREEN
+- Paged grid (up to 7 columns by 8 rows), dock, folders, drag and drop, edit sheet, lock layout.
+- Configurable gestures: swipe up, swipe down, double tap, long-press, home button.
+- App shortcuts in the long-press menu (when DotOS is the default home app).
+
+APP LIBRARY AND DRAWER
+- App Library page with automatic categories, Suggestions and Recently added.
+- Drawer with A-Z grid, fast scroller, fuzzy local search and an inline calculator.
+- Work profile tab and Private Space support (Android 15 and later).
+- Hidden apps list protected by your fingerprint or screen lock.
+- Optional notification badges, computed on the device.
+
+ICONS
+- Original line and dot-matrix glyphs drawn in code, the app's own monochrome icon layer where available, and an automatic dot-ify fallback for every other app.
+- Plate shapes, colours, sizes, dot density, per-app overrides, and icon pack support (appfilter.xml).
+
+WALLPAPERS
+- Ten procedural wallpapers rendered live, with presets and a customizer: Atmosphere, Dot Field, Halftone Orb, Dot Wave, Orbit, Gradient Dither, Matrix Rain, Contour Map, Pulse, Glyph Burst.
+- Fluted Glass effect, blur and dim, your own photo, and a live wallpaper service.
+
+WIDGETS
+- 19 built-in widgets: Clock, Date and Calendar, Battery, Compass, Life in Dots, Quick Settings, Search, Photo, Recorder, Pedometer, Away Time, Breathing Break, Timer, Sticky Note, LED Sign, Snake, Music, Counter and Quick Capture.
+- Hosts third-party widgets. Includes Glance widgets (Clock, Battery, Life in Dots) that other launchers can use.
+
+SETTINGS AND BACKUP
+- One searchable settings app. Export and restore everything as a single .dotbackup file that you control.
+
+PRIVACY
+- No INTERNET permission: the build fails in CI if one appears. No analytics, crash reporting or ads. All data stays on your device.
+- Optional permissions are asked for only when you first use the feature: microphone (Recorder), activity recognition (Pedometer), calendar (Date widget), notification access (badges, Music widget) and accessibility (lock-screen gesture only).
+
+WHY QUERY_ALL_PACKAGES
+A launcher must show every app installed on the device, across all user profiles, and must find installed icon packs. DotOS uses this permission only for that purpose. The list is kept in memory and is never stored or sent anywhere.
+
+ANTI-FEATURES
+None. No ads, no tracking, no network services, and no proprietary libraries (only AndroidX, Kotlin and JetBrains libraries are used).
+
+Requires Android 10 or newer. Some features need newer versions: shader wallpapers and Glass need Android 13, Private Space needs Android 15.
+
+Source code, issues and contributing guide: https://github.com/nAItiklearn/dotOS
+License: GPL-3.0-or-later.

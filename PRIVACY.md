@@ -62,6 +62,7 @@ The accessibility service exists for a single purpose: performing the system "lo
 - Links such as "Source code" in About are opened by your browser, not by DotOS.
 - Android itself, your device maker or an app store may collect diagnostics about any app. DotOS does not integrate with any of them.
 - Hiding an app only hides it inside DotOS. Other launchers and system Settings still show it.
+- The hidden apps list is protected by your fingerprint or screen lock. On a device with no screen lock set there is nothing to authenticate against, so the prompt is skipped.
 
 ## Changes and questions
 

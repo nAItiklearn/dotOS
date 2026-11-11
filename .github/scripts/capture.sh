@@ -27,11 +27,11 @@ shot 11-edit-sheet
 adb shell input keyevent KEYCODE_BACK; sleep 1
 adb shell am start -W -n "$PKG/$PKG.SettingsActivity"; sleep 4
 shot 12-settings
-adb shell am start -W -n "$PKG/$PKG.SettingsActivity" --es dotos.settings.screen customizer; sleep 4
+adb shell am start -W --activity-clear-task -n "$PKG/$PKG.SettingsActivity" --es dotos.settings.screen customizer; sleep 4
 shot 13-customizer
-adb shell am start -W -n "$PKG/$PKG.SettingsActivity" --es dotos.settings.screen icons; sleep 4
+adb shell am start -W --activity-clear-task -n "$PKG/$PKG.SettingsActivity" --es dotos.settings.screen icons; sleep 4
 shot 14-icons
-adb shell am start -W -n "$PKG/$PKG.SettingsActivity" --es dotos.settings.screen layout; sleep 4
+adb shell am start -W --activity-clear-task -n "$PKG/$PKG.SettingsActivity" --es dotos.settings.screen layout; sleep 4
 shot 15-layout
 adb logcat -d -s AndroidRuntime:E > shots/crashes.txt || true
 exit 0

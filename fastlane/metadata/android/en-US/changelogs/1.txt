@@ -1,0 +1,7 @@
+First release (0.1.0).
+- Home grid with dock, folders, drag and drop, gestures and an App Library
+- Drawer with fuzzy search, calculator, work tab and Private Space
+- Dot-matrix, line, original and themed icons; icon pack support
+- 10 procedural wallpapers, Glass effect, live wallpaper
+- 19 built-in widgets plus Glance widgets
+- Backup and restore. No internet permission.
