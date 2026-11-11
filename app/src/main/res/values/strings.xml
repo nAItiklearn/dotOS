@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Rename the whole app here. -->
+    <string name="app_name">DotOS Launcher</string>
+    <string name="settings_title">DotOS settings</string>
+</resources>

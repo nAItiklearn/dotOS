@@ -1,0 +1,30 @@
+# Build
+.gradle/
+build/
+/local.properties
+.kotlin/
+*.apk
+*.aab
+captures/
+.externalNativeBuild/
+.cxx/
+
+# IDE
+.idea/
+*.iml
+.vscode/
+.DS_Store
+
+# Signing — never commit keys
+*.jks
+*.keystore
+*.p12
+keystore.properties
+
+# Reference screenshots of the original OS stay local (copyrighted artwork, not ours)
+/*.png
+/reference/
+/.gen/
+/*.jpg
+/*.jpeg
+/*.webp
